@@ -1,0 +1,18 @@
+// filepath: c:\Users\IS4-S 2\Documents\WORK\Freela\_Makengo\logistica-sass\backend\tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": [
+      "node"
+    ],
+    "sourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true, // Adicione esta linha
+    "esModuleInterop": true // E esta também
+  }
+}

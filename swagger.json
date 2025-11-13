@@ -1,0 +1,581 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Backend Blog",
+    "description": "API BLOG FLASH SPORT",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/auth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Autenticação de utilizador",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "/api/auth/forgot-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Recuperar senha do utilizador",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recuperação de senha do utilizador",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Resetar senha do utilizador",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Senha resetada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Verify Profile user",
+        "security": [],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVerifyToken"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVerifyToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Listar todos os utilizadores",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Lista de utilizadores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtilizadorRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Criar novo utilizador",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUtilizadorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Utilizador criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UtilizadorRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/api/category": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Listar categorias",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Lista de categorias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Criar nova categoria",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Categoria criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/post": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Listar posts",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Lista de posts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Criar novo post",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UtilizadorRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUtilizadorRequest": {
+        "type": "object",
+        "required": [
+          "nome",
+          "email",
+          "passwordHash",
+          "perfil",
+          "dataCriacao"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "João Silva"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "joao.silva@email.com"
+          },
+          "passwordHash": {
+            "type": "string",
+            "example": "$2b$10$hashGeradoAqui"
+          },
+          "perfil": {
+            "type": "string",
+            "example": "ADMIN"
+          },
+          "dataCriacao": {
+            "type": "date-time",
+            "example": "2024-06-15T12:00:00Z"
+          }
+        }
+      },
+      "AuthRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "senha"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "joao.silva@email.com"
+          },
+          "senha": {
+            "type": "string",
+            "example": "$2b$10$hashGeradoAqui"
+          }
+        }
+      },
+      "ForgotPasswordRequest": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "joao.silva@email.com"
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "required": [
+          "token",
+          "password"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "password": {
+            "type": "string",
+            "example": "newPassword123"
+          }
+        }
+      },
+      "ResponseVerifyToken": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "example": "Tecnologia"
+          },
+          "slug": {
+            "type": "string",
+            "example": "tecnologia"
+          }
+        }
+      },
+      "CreateCategoryRequest": {
+        "type": "object",
+        "required": [
+          "nome",
+          "slug"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Tecnologia"
+          },
+          "slug": {
+            "type": "string",
+            "example": "tecnologia"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "titulo": {
+            "type": "string",
+            "example": "Meu primeiro post"
+          },
+          "slug": {
+            "type": "string",
+            "example": "meu-primeiro-post"
+          },
+          "conteudo": {
+            "type": "string",
+            "example": "Conteúdo do post..."
+          },
+          "caminhoImagem": {
+            "type": "string",
+            "example": "/uploads/2025/11/11/image.jpg"
+          },
+          "urlImagem": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/uploads/image.jpg"
+          },
+          "estado": {
+            "type": "string",
+            "example": "PUBLISHED"
+          },
+          "autorId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "categoriaId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "660e8400-e29b-41d4-a716-446655440111"
+          },
+          "dataPublicacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-11-11T12:00:00Z"
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-11-10T09:00:00Z"
+          },
+          "dataAtualizacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-11-11T10:00:00Z"
+          }
+        }
+      },
+      "CreatePostRequest": {
+        "type": "object",
+        "required": [
+          "titulo",
+          "slug",
+          "conteudo",
+          "autorId",
+          "categoriaId"
+        ],
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "example": "Meu primeiro post"
+          },
+          "slug": {
+            "type": "string",
+            "example": "meu-primeiro-post"
+          },
+          "conteudo": {
+            "type": "string",
+            "example": "Conteúdo do post..."
+          },
+          "caminhoImagem": {
+            "type": "string",
+            "example": "/uploads/2025/11/11/image.jpg"
+          },
+          "urlImagem": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/uploads/image.jpg"
+          },
+          "estado": {
+            "type": "string",
+            "example": "DRAFT"
+          },
+          "autorId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "categoriaId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "660e8400-e29b-41d4-a716-446655440111"
+          },
+          "dataPublicacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-11-11T12:00:00Z"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "description": "Autenticação utilizando Json Web Token",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url       = env("DATABASE_URL")
+}
+
+model Utilizador {
+  id              String   @id @default(uuid())
+  nome            String
+  email           String   @unique
+  passwordHash    String
+  perfil          String   @default("Leitor") // Leitor / Autor / Admin
+  activo          Boolean  @default(true)
+  dataCriacao     DateTime @default(now())
+  verifyToken     String
+
+  // Relação com Post
+  posts Post[]
+}
+
+model Post {
+  id              String          @id @default(uuid())
+  titulo          String
+  slug            String          @unique
+  conteudo        String
+  caminhoImagem   String?
+  urlImagem       String?
+  estado          String          @default("Rascunho")
+  autorId         String
+  dataPublicacao  DateTime?
+  dataCriacao     DateTime        @default(now())
+  dataAtualizacao DateTime?
+
+  // Relações
+  autor           Utilizador      @relation(fields: [autorId], references: [id])
+  categorias      PostCategoria[]
+  comentarios     Comentario[]
+  envios          NewsletterEnvio[]
+
+  @@index([estado], name: "IDX_Post_estado")
+  @@index([dataPublicacao], name: "IDX_Post_dataPublicacao")
+}
+
+model Categoria {
+  id    String @id @default(uuid())
+  nome  String @unique
+  slug  String @unique
+
+  posts PostCategoria[]
+}
+
+model PostCategoria {
+  postId      String
+  categoriaId String
+
+  post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoriaId])
+}
+
+model Comentario {
+  id          String   @id @default(uuid())
+  postId      String
+  nome        String
+  email       String
+  mensagem    String
+  aprovado    Boolean  @default(false)
+  dataCriacao DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([aprovado], name: "IDX_Comentario_aprovado")
+}
+
+model Newsletter {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  nome            String?
+  dataInscricao   DateTime @default(now())
+  activo          Boolean  @default(true)
+
+  envios NewsletterEnvio[]
+
+  @@index([activo], name: "IDX_Newsletter_activo")
+}
+
+model NewsletterEnvio {
+  id             String   @id @default(uuid())
+  newsletterId   String
+  postId         String
+  dataEnvio      DateTime @default(now())
+
+  newsletter Newsletter @relation(fields: [newsletterId], references: [id])
+  post       Post       @relation(fields: [postId], references: [id])
+}
