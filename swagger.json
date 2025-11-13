@@ -409,6 +409,42 @@
           }
         }
       }
+    },
+    "/api/post/{authorId}": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Listar posts por autor",
+        "security": [],
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de posts do autor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

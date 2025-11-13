@@ -6,6 +6,17 @@ class ListPostBySlugService {
       where: {
         slug,
       },
+      include: {
+        categorias: {
+          select: {
+            categoria: {
+              select: {
+                nome: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return posts;
