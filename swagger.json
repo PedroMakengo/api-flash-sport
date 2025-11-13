@@ -265,6 +265,35 @@
         }
       }
     },
+    "/api/category/{id}": {
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Eliminar categoria por ID",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "660e8400-e29b-41d4-a716-446655440111"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoria eliminada com sucesso"
+          },
+          "404": {
+            "description": "Categoria não encontrada"
+          }
+        }
+      }
+    },
     "/api/post": {
       "get": {
         "tags": [
@@ -345,6 +374,35 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Post não encontrado"
+          }
+        }
+      }
+    },
+    "/api/post/{id}": {
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Eliminar post por ID",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Post eliminado com sucesso"
           },
           "404": {
             "description": "Post não encontrado"
