@@ -10,7 +10,20 @@ class ListPostByAuthorService {
         dataCriacao: "desc",
       },
       take: 4,
+      include: {
+        categorias: {
+          select: {
+            categoria: {
+              select: {
+                nome: true,
+              },
+            },
+          },
+        },
+      },
     });
+
+    return postsByAuthors;
   }
 }
 
