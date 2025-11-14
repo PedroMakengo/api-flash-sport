@@ -15,7 +15,7 @@ const postRoutes = Router();
 
 postRoutes.get("/", list);
 postRoutes.get("/:slug", show);
-postRoutes.get("/:authorId", showByAuthor);
+postRoutes.get("/:autorId/autor", showByAuthor);
 postRoutes.delete("/:id", remove);
 postRoutes.post("/", create);
 

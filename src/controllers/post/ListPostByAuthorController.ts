@@ -3,11 +3,11 @@ import { ListPostByAuthorService } from "../../services/post/ListPostByAuthorSer
 
 class ListPostByAuthorController {
   async handle(request: Request, response: Response) {
-    const { authorId } = request.params;
+    const { autorId } = request.params;
 
     const listPostByAuthorService = new ListPostByAuthorService();
 
-    const posts = await listPostByAuthorService.execute(authorId);
+    const posts = await listPostByAuthorService.execute(autorId);
 
     return response.json(posts);
   }

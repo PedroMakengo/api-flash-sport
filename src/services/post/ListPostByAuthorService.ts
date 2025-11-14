@@ -6,10 +6,7 @@ class ListPostByAuthorService {
       where: {
         autorId: author,
       },
-      orderBy: {
-        dataCriacao: "desc",
-      },
-      take: 4,
+      take: 3,
       include: {
         categorias: {
           select: {

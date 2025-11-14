@@ -410,7 +410,7 @@
         }
       }
     },
-    "/api/post/{authorId}": {
+    "/api/post/{autorId}/autor": {
       "get": {
         "tags": [
           "Post"
@@ -419,7 +419,7 @@
         "security": [],
         "parameters": [
           {
-            "name": "authorId",
+            "name": "autorId",
             "in": "path",
             "required": true,
             "schema": {
